@@ -3,6 +3,8 @@ from scipy.stats import binom
 
 a=DefaultParameter.DefaultParameter()
 
+# ======================Input in the main page======================
+
 Container_L = 48
 Container_W = 45
 Container_H = 34
@@ -18,14 +20,14 @@ ODC_Processing = False
 Calculated_Commodity_Shipment_Week = St_Pack/a.Net_cuft_Truck
 Override_Freq = 0
 Min_Freq = a.Min_Freq
-if (Override_Freq>0):
+if ( Override_Freq > 0 ):
     Actual_Freq = Override_Freq
 else:
     Actual_Freq = max(St_Pack/a.Net_cuft_Truck, a.Min_Freq)
 a=DefaultParameter.DefaultParameter(Number_of_Variants, Actual_Freq)
 
 
-#======================Frequency=========================================
+# ======================Frequency=========================================
 
 print("======================Frequency=========================================")
 apd = Penetration*Program_Planning_Volume*Part_Veh
@@ -47,7 +49,7 @@ print("Min Freq: ", a.Min_Freq)
 print("Calculated Freq: ", max(St_Pack/a.Net_cuft_Truck,a.Min_Freq))
 print("Override Freq: ", Override_Freq)
 print("Actual Freq", Actual_Freq)
-#======================Plant Bank=========================================
+# ======================Plant Bank=========================================
 
 print("======================Plant Bank=========================================")
 print("Internal Handling Time: ", a.current_proliferation)
@@ -61,7 +63,7 @@ print("Container Per Day", cpd)
 ppd = binom.ppf(a.Upper_Confidence_Limit_Volatility, Program_Planning_Volume, Penetration)*Part_Veh
 print("Peak Part Demand/Day", ppd)
 print("Container Per Day: ", cpd)
-Truck_time = (a.Load_Unload_time+(2*Supplier_Plant_Distance/a.Avg_Speed))/10
+Truck_time = (a.Load_Unload_time+(2*Supplier_Plant_Distance/a.Avg_Speed))/a.Service_Hrs_Day
 print(Truck_time)
 if Cross_MX_Border:
     MX_Border_Time = a.Mx_Border_Crossing_Time
@@ -88,7 +90,7 @@ print("New Plant Bank: ", cpd/(Actual_Freq/Plant_days_Wk)+max(a.Min_Containers_P
 print("Old Plant Bank w/o Proliferation: ", 2*cpd, "Container", 2, "ContainerDays")
 print("Old Proliferation: ", a.current_proliferation)
 print("Old Plant Bank: ", 2*cpd*(1+a.current_proliferation), "Container", 2*cpd*(1+a.current_proliferation)/a.Min_Containers_Plant)
-#======================In-Transit========================================
+# ======================In-Transit========================================
 
 print("======================In-Transit========================================")
 print("Actual Frequency:: ", Actual_Freq)
@@ -110,7 +112,7 @@ print("Old Container In Transit w/o Proliferation: ", cpd*old_citp, "Container",
 print("Old Proliferation: ", a.current_proliferation)
 print("Old Container In Transit: ", (a.current_proliferation+1)*cpd*old_citp,"Container  ", ((a.current_proliferation+1)*cpd*old_citp)/cpd, "ContainerDays")
 print("New Containers In Transit: ", (1+round(0.5+ttps*Actual_Freq/Plant_days_Wk))*(cpd/(Actual_Freq/Plant_days_Wk)), "Container", (1+round(0.5+ttps*Actual_Freq/Plant_days_Wk))*(cpd/(Actual_Freq/Plant_days_Wk))/cpd, "ContainerDays")
-#======================Suppplier=========================================
+# ======================Suppplier=========================================
 
 print("======================Suppplier=========================================")
 print("Number of Variants: ", Number_of_Variants)
