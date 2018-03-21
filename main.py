@@ -37,66 +37,16 @@ contW = 11
 contH = 12
 contT = 13
 re = 14
-qtyWk1 = 15 #JUST USE WEEK 1 VALUES FOR NOW
-qtyWk2 = 16
-qtyWk3 = 17
-qtyWk4 = 18
-qtyWk5 = 19
-qtyWk6 = 20
-qtyWk7 = 21
-qtyWk8 = 22
-qtyWk9 = 23
-qtyWk10 = 24
-qtyWk11 = 25
-qtyWk12 = 26
-qtyWk13 = 27
-qtyWk14 = 28
-qtyWk15 = 29
-qtyWk16 = 30
-qtyWk17 = 31
-qtyWk18 = 32
-qtyWk19 = 33
-qtyWk20 = 34
-wtUtilWk1 = 35 #JUST USE WEEK 1 VALUES FOR NOW
-lnCubeWk1 = 36
-wtUtilWk2 = 37
-lnCubeWk2 = 38
-wtUtilWk3 = 39
-lnCubeWk3 = 40
-wtUtilWk4 = 41
-lnCubeWk4 = 42
-wtUtilWk5 = 43
-lnCubeWk5 = 44
-wtUtilWk6 = 45
-lnCubeWk6 = 46
-wtUtilWk7 = 47
-lnCubeWk7 = 48
-wtUtilWk8 = 49
-lnCubeWk8 = 50
-wtUtilWk9 = 51
-lnCubeWk9 = 52
-wtUtilWk10 = 53
-lnCubeWk10 = 54
-wtUtilWk11 = 55
-lnCubeWk11 = 56
-wtUtilWk12 = 57
-lnCubeWk12 = 58
-wtUtilWk13 = 59
-lnCubeWk13 = 60
-wtUtilWk14 = 61
-lnCubeWk14 = 62
-wtUtilWk15 = 63
-lnCubeWk15 = 64
-wtUtilWk16 = 65
-lnCubeWk16 = 66
-wtUtilWk17 = 67
-lnCubeWk17 = 68
-wtUtilWk18 = 69
-lnCubeWk18 = 70
-wtUtilWk19 = 71
-lnCubeWk19 = 72
-wtUtilWk20 = 73
-lnCubeWk20 = 74
+# Following functions give legend index for qtyWk, wtUtil, and lnCube
+def qtyWk(week):
+    return week + 14
+
+def wtUtil(week):
+    return (week*2)-1 + 34
+
+def lnCube(week):
+    return (week*2)-1 + 35
+
 
 
 # Dollar weight per
@@ -105,6 +55,9 @@ InboundTrans = 1.25
 
 mpg = 6.2
 plantWorkingDays = 6
+
+
+
 
 
 def finalCost(part, frequency): #final cost to be used w/ frequency
@@ -122,7 +75,7 @@ def freight(part, frequency):
 
 
 def floorSpace(part, frequency):
-    space = float(part[qtyWk1]) // float(part[stdPack]) // float(frequency)
+    space = float(part[qtyWk(1)]) // float(part[stdPack]) // float(frequency)
 
     if frequency % plantWorkingDays != 0:
         space = math.ceil(space*1.1)
@@ -198,14 +151,9 @@ with open('silao_data_set_parts.csv', 'rb') as csvfile:
         i = i + 1
 
 
-
-
-
 for part in parts:
 
     print(floorSpace(part, 3))
-
-
 
 
     if routeDict[part[routeID]][mode] == "TL":
@@ -221,8 +169,3 @@ for part in parts:
     elif routeDict[part[routeID]][mode] == "ITL":
         pass
         # print("GOT ITL")
-
-
-
-
-
