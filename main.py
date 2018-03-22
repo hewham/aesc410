@@ -1,6 +1,5 @@
 
 # main py file for aesc410 for calculations n' stuff
-
 import csv
 import math
 
@@ -40,10 +39,8 @@ re = 14
 # Following functions give legend index for qtyWk, wtUtil, and lnCube
 def qtyWk(week):
     return week + 14
-
 def wtUtil(week):
     return (week*2)-1 + 34
-
 def lnCube(week):
     return (week*2)-1 + 35
 
@@ -57,7 +54,36 @@ mpg = 6.2
 plantWorkingDays = 6
 
 
+def populate():
+    with open('silao_data_set_routes.csv', 'rb') as csvfile:
+        reader = csv.reader(csvfile)
 
+        i = 0
+        for row in reader:
+            j = 0
+            if i == 0:
+                for thing in row:
+                    routeLegend.append(row[j])
+                    j = j + 1
+            if i != 0:
+                routes.append(row)
+                routeDict[routes[i-1][0]] = routes[i-1]
+            i = i + 1
+
+
+    with open('silao_data_set_parts.csv', 'rb') as csvfile:
+        reader = csv.reader(csvfile)
+
+        i = 0
+        for row in reader:
+            j = 0
+            if i == 0:
+                for thing in row:
+                    partLegend.append(row[j])
+                    j = j + 1
+            if i != 0:
+                parts.append(row)
+            i = i + 1
 
 
 def finalCost(part, frequency): #final cost to be used w/ frequency
@@ -81,12 +107,6 @@ def floorSpace(part, frequency):
         space = math.ceil(space*1.1)
 
     return space
-
-
-
-
-
-
 
 
 
@@ -120,36 +140,13 @@ def contTransit(part, frequency):
 
 
 
-with open('silao_data_set_routes.csv', 'rb') as csvfile:
-    reader = csv.reader(csvfile)
-
-    i = 0
-    for row in reader:
-        j = 0
-        if i == 0:
-            for thing in row:
-                routeLegend.append(row[j])
-                j = j + 1
-        if i != 0:
-            routes.append(row)
-            routeDict[routes[i-1][0]] = routes[i-1]
-        i = i + 1
 
 
-with open('silao_data_set_parts.csv', 'rb') as csvfile:
-    reader = csv.reader(csvfile)
 
-    i = 0
-    for row in reader:
-        j = 0
-        if i == 0:
-            for thing in row:
-                partLegend.append(row[j])
-                j = j + 1
-        if i != 0:
-            parts.append(row)
-        i = i + 1
 
+
+
+populate()
 
 for part in parts:
 
