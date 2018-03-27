@@ -127,13 +127,37 @@ def contPlant(part, frequency):
     return 0
 
 
-def contSupplier(part, frequecny):
+def contSupplier(part, frequency):
+    #c = ShipSize + ShipSafety
     return 0
 
 def contTransit(part, frequency):
+    #Transit = ShipSize(part,frequency) * math.ceil((Shipday(part,frequency)*TransTime(part,frequency))+1) 
     return 0
-
-
+def TransTime(part,frequency,TruckTime,Mxborder,ODC):
+    #T = TruckTime + Mxborder + ODC
+    return 0
+def getTruckTime(LoadTime,OW_Plantd,AvgSpeed, ServiceTime):
+    #T = ((LoadTime + (2*OW_Plantd))/AvgSpeed)/ServiceTime
+    return 0 
+def Shipday(part,frequency):
+    #S = Shipperweek/Plantdays
+    return 0
+def ShipSize(part,frequency):
+    #S = ContainersDay/ShipDay
+    return 0
+def ContainersDay(part,frequency):
+    #C = AvgPartDemand/ContainerStand
+    return 0
+def AvgPartDemand(part,frequency):
+    #A = AvgWeekReq/PlantWorkDays
+    return 0
+def ShipSafety(part,frequency):
+    #S= Min(ContMin,VolumeCalc)
+    return 0
+def VolumeCalc(part,frequemcy):
+    #V= MinSafety*ContainersDay +ShipSize +1
+    
 
 
 
