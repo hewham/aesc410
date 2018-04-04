@@ -1,0 +1,23 @@
+{
+  "name": "aesc410_gm_capstone",
+  "version": "1.0.0",
+  "description": "capstone project for aesc410, 2018, MSU.",
+  "main": "main.js",
+  "dependencies": {
+    "papaparse": "^4.3.7"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hewham/aesc410.git"
+  },
+  "author": "hewham",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hewham/aesc410/issues"
+  },
+  "homepage": "https://github.com/hewham/aesc410#readme"
+}
