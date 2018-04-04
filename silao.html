@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <script>
+    </script>
+
+</head>
+<body>
+
+<div>
+<table><tr> <th>Supplier</th> <th>Best Frequency</th> <th>Best Cost</th> <th>Originial Frequency</th> <th>Original Cost</th> <th> Cost Difference</th> </tr><tr><td>detroit</td><td>2456.3</td><td>4324</td><td>8494</td></tr><tr><td>ypsi</td><td>1234.23</td><td>5356.34</td><td>7549.98</td></tr><tr><td>ann arbor</td><td>4237.5</td><td>8599.2</td><td>5574.3</td></tr></table>
+</div>
+
+</body>
+</html>
+
+function tableLoad(){
+
+    var html = "";
+    var tableArray = [];
+    tableArray.push(['detroit', 2456.3, 4324, 8494]);
+    tableArray.push(['ypsi',1234.23,5356.34,7549.98]);
+    tableArray.push(['ann arbor', 4237.5,8599.2, 5574.3]);
+
+    html = html + "<table><tr> <th>Supplier</th> <th>Best Frequency</th> <th>Best Cost</th> <th>Originial Frequency</th> <th>Original Cost</th> <th> Cost Difference</th> </tr>";
+    i = 0;
+    for(var i=0; i < tableArray.length; i++){
+        j=0;
+        html += "<tr>";
+        for(var j=0; j< tableArray[1].length; j++){
+            html += "<td>"+ tableArray[i][j] + "</td>"
+        }
+        html += "</tr>";
+    }
+    html += "</table>";
+    console.log(html);
+    return html;
+}
+
