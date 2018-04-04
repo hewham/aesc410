@@ -63,14 +63,8 @@ ManufacTime = 2
 
 
 
-
-
-
-
-
-
 def populate():
-    with open('silao_data_set_routes.csv', 'rb') as csvfile:
+    with open('silao_data_set_routes.csv') as csvfile:
         reader = csv.reader(csvfile)
         i = 0
         for row in reader:
@@ -84,7 +78,7 @@ def populate():
                 routeDict[routes[i-1][0]] = routes[i-1]
             i = i + 1
 
-    with open('silao_data_set_parts.csv', 'rb') as csvfile:
+    with open('silao_data_set_parts.csv') as csvfile:
         reader = csv.reader(csvfile)
         i = 0
         for row in reader:
@@ -97,7 +91,7 @@ def populate():
                 parts.append(row)
             i = i + 1
 
-    with open('container_names_with_pricing.csv', 'rb') as csvfile:
+    with open('container_names_with_pricing.csv') as csvfile:
         reader = csv.reader(csvfile)
         i = 0
         for row in reader:
@@ -124,16 +118,16 @@ def getMiles(part):
     global routes
     global routeID
     global miles
-    i=0;
+    i=0
     for route in routes:
         if route[routeID] == part[routeID]:
-            break;
+            break
         i+=1
     return float(routes[i][miles])
 
 #AVG WEEKLY PARTS REQUIRED done
 def averageQtyWk(part):
-    total = 0;
+    total = 0
     for i in range(0,20):
         if part[qtyWk(i)].isalpha() == False:
             total += float(part[qtyWk(i)])
@@ -143,7 +137,7 @@ def averageQtyWk(part):
 
 #PEAK WEEKLY PARTS REQUIRED
 def maxQtyWk(part):
-    max = 0;
+    max = 0
     for i in range(0,20):
         if qtyWk(i) > max:
             max = qtyWk(i)
@@ -151,7 +145,7 @@ def maxQtyWk(part):
 
 #NUMBER OF PARTS
 def numOfParts(route):
-    num = 0;
+    num = 0
     for part in parts:
         if part[routeID] == route[routeID]:
             num+=1
@@ -176,6 +170,8 @@ def containerPrice(part):
     for container in containers:
         if part[containerNameInPart] == container[containerName]:
             return container[containerPrice]
+        else:
+            return 0
 
 ##########################################################
 
@@ -334,12 +330,20 @@ def ODC(part):
 
 
 populate()
+j = 0
+for part in parts:
+    i = 0
+    for field in part:
+        if i > 16 and part[i].strip() != "-":
+            part[i] = field.strip().replace(',','')
+        elif part[i].strip() == "-":
+            parts.pop(j)
+            break
+        i += 1
+    print(part)
+    j += 1
 
 for part in parts:
-
-
-
-
     if routeDict[part[routeID]][mode] == "TL":
         print(finalCost(part, 3))
         pass
@@ -348,7 +352,7 @@ for part in parts:
         pass
     elif routeDict[part[routeID]][mode] == "CON":
         pass
-        # print("GOT CON")
+         # print("GOT CON")
     elif routeDict[part[routeID]][mode] == "ITL":
         pass
         # print("GOT ITL")
