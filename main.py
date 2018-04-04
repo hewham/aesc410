@@ -64,6 +64,9 @@ ManufacTime = 2
 
 
 def populate():
+    global originID;
+    print(originID);
+
     with open('silao_data_set_routes.csv') as csvfile:
         reader = csv.reader(csvfile)
         i = 0
@@ -85,10 +88,12 @@ def populate():
             j = 0
             if i == 0:
                 for thing in row:
-                    partLegend.append(row[j])
-                    j = j + 1
+                        partLegend.append(row[j])
+                        j = j + 1
             if i != 0:
-                parts.append(row)
+                print(row[originID]);
+                if(row[originID]) == "#N/A":
+                    parts.append(row)
             i = i + 1
 
     with open('container_names_with_pricing.csv') as csvfile:
@@ -330,22 +335,22 @@ def ODC(part):
 
 
 populate()
-j = 0
-for part in parts:
-    i = 0
-    for field in part:
-        if i > 16 and part[i].strip() != "-":
-            part[i] = field.strip().replace(',','')
-        elif part[i].strip() == "-":
-            parts.pop(j)
-            break
-        i += 1
-    print(part)
-    j += 1
+# j = 0
+# for part in parts:
+#     i = 0
+#     for field in part:
+#         if i > 16 and part[i].strip() != "-":
+#             part[i] = field.strip().replace(',','')
+#         elif part[i].strip() == "-":
+#             parts.pop(j)
+#             break
+#         i += 1
+#     print(part)
+#     j += 1
 
 for part in parts:
     if routeDict[part[routeID]][mode] == "TL":
-        print(finalCost(part, 3))
+        # print(finalCost(part, 3))
         pass
     elif routeDict[part[routeID]][mode] == "MR":
         # print("GOT MR")
