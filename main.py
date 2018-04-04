@@ -128,10 +128,34 @@ def getMiles(part):
 #AVG WEEKLY PARTS REQUIRED done
 def averageQtyWk(part):
     total = 0
+    num = 20
+    qty = 0
     for i in range(0,20):
-        if part[qtyWk(i)].isalpha() == False:
-            total += float(part[qtyWk(i)])
-    return total/20
+        if '-' in part[qtyWk(i)]:
+            num = - 1;
+        else:
+            qty = part[qtyWk(i)].strip().replace(',', '')
+            if qty.isdigit():
+                total += float(qty)
+    return total/num
+
+# for part in parts:
+#     i = 0
+#     for field in part:
+#         if i > 16 and part[i].strip() != "-":
+#             part[i] = field.strip().replace(',','')
+#         elif "-" in part[i]:
+#             parts.pop(j)
+#             break
+#         i += 1
+#     print(part)
+#     j += 1
+
+
+
+
+
+
 
 #MANUFACTURING TIME
 
@@ -158,10 +182,11 @@ def numOfParts(route):
 fuelRate = 2.559
 
 # GAS PRICE PER ROUTE
-def gasCost(miles):
+def gasCost(miles):##### CHANGE 1 ##############
     global mpg
     global fuelRate
-    return (miles/mpg) * fuelRate
+
+    return (miles/mpg) * fuelRate + routes[plannedLaneRate]
 
 def containerPrice(part):
     global containers
@@ -197,18 +222,30 @@ def freight(part, frequency):
 def floorSpace(part, frequency):
     global stdPack
     global plantWorkingDays
-    space = float(part[qtyWk(1)]) / float(part[stdPack]) / float(frequency)
+    #space = float(part[qtyWk(1)]) / float(part[stdPack]) / float(frequency)
+
+    space = float(averageQtyWk(part)) / float(frequency) / float(part[stdPack])
 
     if frequency % plantWorkingDays != 0:
         space = math.ceil(space*1.1)
 
     return space
 
-def invHolding(part, frequency):
-    # I = 0.15 * numberParts * costPerPart
-    # I = 0.15 * floorSpace(part, frequency) * costPerPart
-    # return I
-    return 5
+
+def invHolding(part, frequency):   ########CHANGE 2#########
+    global stdPack
+    global plantWorkingDays
+
+    space = float(averageQtyWk(part)) / float(frequency) / float(part[stdPack])
+
+    if frequency % plantWorkingDays != 0:
+        space = space*1.1
+
+    space *= float(part[stdPack]) * float(part[piecePrice]) * 0.15
+
+    return space
+
+
 
 def contCapital(part, frequency):
     containerNum = contPlant(part,frequency) + contSupplier(part,frequency) + contTransit(part, frequency)
@@ -331,20 +368,10 @@ def ODC(part):
 
 populate()
 j = 0
-for part in parts:
-    i = 0
-    for field in part:
-        if i > 16 and part[i].strip() != "-":
-            part[i] = field.strip().replace(',','')
-        elif part[i].strip() == "-":
-            parts.pop(j)
-            break
-        i += 1
-    print(part)
-    j += 1
 
 for part in parts:
     if routeDict[part[routeID]][mode] == "TL":
+        print(part)
         print(finalCost(part, 3))
         pass
     elif routeDict[part[routeID]][mode] == "MR":
